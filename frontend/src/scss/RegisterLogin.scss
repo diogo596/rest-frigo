@@ -1,0 +1,68 @@
+$background-color: #ffffff;
+$navbar-color: #def7ffce;
+$primary-color: #68bde1;
+$secondary-color: #e8e7e7ce;
+
+$text-color: #000000;
+$outline: #100101f1;
+
+.header {
+    display: flex;
+    width: 100%;
+    background-color: $navbar-color;
+    padding: 0.5rem 0 0.5rem 1rem;
+    .main-title {
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0 30rem 0 30rem;
+
+    }
+}
+
+
+.login-register {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background-color: $secondary-color;
+        margin: 2rem 30rem 0 30rem;
+        padding: 1rem 0 2rem 0;
+        border-radius: 10px;
+    }
+
+
+.register {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 30rem 0 30rem;
+}
+
+.form {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.label-container {
+    display: flex;
+    flex-direction: column;
+}
+.register-button {
+    background-color: $primary-color;
+    width: 10rem;
+    height: 2rem;
+    border-radius: 15px;
+}
+.button-login {
+    background-color: $primary-color;
+    width: 10rem;
+    height: 2rem;
+    border-radius: 15px;
+}

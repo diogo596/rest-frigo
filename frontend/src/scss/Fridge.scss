@@ -1,0 +1,24 @@
+$background-color: #ffffff;
+$navbar-color: #def7ffce;
+$primary-color: #68bde1;
+$secondary-color: #e8e7e7ce;
+
+$text-color: #000000;
+$outline: #100101f1;
+
+.frigo {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    .title-frigo {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0 0 2rem 0;
+    }
+    .frigo-logo {
+        height: 50rem;
+        width: 30rem;
+    }
+}
