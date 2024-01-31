@@ -1,0 +1,75 @@
+$background-color: #ffffff;
+$navbar-color: #def7ffce;
+$primary-color: #68bde1;
+$secondary-color: #e8e7e7ce;
+
+$text-color: #000000;
+$outline: #100101f1;
+
+.recettes {
+    height: 90vh;
+    width: 95vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin : 0.5rem 2rem;
+    .plat {
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 65%;
+        .infos-recette {
+            display: flex;
+            width: 100%;
+            height: 50%;
+            background-color: $secondary-color;
+            border: 2PX transparent;
+            margin: 3PX;
+            border-radius: 15PX;
+            .title-image{
+                margin: 0.5rem;
+                height: 100%;
+                width: 65%;
+            }
+            .image { 
+                height: 75%;
+                width: 95%;
+             }
+        }
+        .ingredients-recettes {
+            margin: 0.5rem;
+            height: 100%;
+            width: 35%;
+}
+    }
+
+    .dessert {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 35%;
+        .infos-dessert {
+            width: 100%;
+            height: 100%;
+            background-color: $secondary-color;
+            border-radius: 15PX;
+            .title-image{
+                margin: 0.5rem;
+                height: 55%;
+                width: 100%;
+            }
+            .image { 
+                height: 95%;
+                width: 95%;
+             }
+           
+    }
+    .ingredients-dessert {
+        margin: 0.5rem;
+        height: 45%;
+        width: 100%;
+    }
+}
+}
