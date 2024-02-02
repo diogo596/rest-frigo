@@ -20,7 +20,7 @@ const fetchDataBase = () => {
 
 function Navbar() {
   return (
-    <div className="navbar">
+    <div className="navbare">
       <div className="contener-logo">
         <img src={refrigerateur} alt="refrigerateur" className="logo" />
         <div className="title">

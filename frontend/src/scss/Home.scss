@@ -39,6 +39,9 @@ $outline: #100101f1;
              }
         }
         .ingredients-recettes {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
             margin: 0.5rem;
             height: 100%;
             width: 35%;
@@ -67,6 +70,9 @@ $outline: #100101f1;
            
     }
     .ingredients-dessert {
+        display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
         margin: 0.5rem;
         height: 45%;
         width: 100%;

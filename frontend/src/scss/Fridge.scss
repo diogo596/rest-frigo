@@ -8,17 +8,38 @@ $outline: #100101f1;
 
 .frigo {
     margin-top: 2rem;
+    margin-left: 2rem;
     display: flex;
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    .title-frigo {
-        font-size: 2rem;
-        font-weight: 600;
-        margin: 0 0 2rem 0;
-    }
-    .frigo-logo {
-        height: 50rem;
-        width: 30rem;
-    }
+
+
+
+}
+.title-frigo {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 2rem 0;
+}
+.frigo-logo {
+    z-index: 4;
+    position: static;
+    height: 40rem;
+    width: 40rem;
+    opacity: 0.5;
+}
+.formule{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    margin-left: 4rem;
+    width: 15rem;
+    overflow: visible;
+    transform: translateY(-163%);
+}
+.label-containe {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 2.5rem 0;
 }
