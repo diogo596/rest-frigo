@@ -49,7 +49,7 @@ const add = async (req, res, next) => {
   try {
     const insertId = await tables.recettes.create(
       {
-        pseudo: recette.pseudo,
+        type: recette.type,
         name: recette.name,
         genre: recette.genre,
       },

@@ -29,7 +29,7 @@ function NavbarLogin() {
           <Link to="https://www.auchandrive.fr">Drive</Link>
         </button>
         <button type="button" className="logout">
-          <Link to="/home">Logout</Link>
+          <Link to="/">Logout</Link>
         </button>
       </div>
       <div className="navbar-secondary">

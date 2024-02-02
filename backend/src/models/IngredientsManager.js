@@ -30,12 +30,16 @@ class IngredientsManager extends AbstractManager {
 
   async readAllByIngredientsId() {
     const [rows] = await this.database.query(
-      `SELECT r.id AS recette_id, r.type, r.name AS recette_name, r.genre, r.photo,
-      i.id AS ingredient_id, i.name AS ingredient_name, i.type AS ingredient_type
-FROM recettes r
-JOIN compositions c ON r.id = c.recettes_id
-JOIN ingredients i ON c.ingredients_id = i.id
-WHERE i.name IN (?, ?, ?);`
+      `SELECT DISTINCT
+      r.id AS recette_id, r.type, r.name AS recette_name, r.genre, r.photo
+  FROM 
+      recettes r
+  JOIN 
+      compositions c ON r.id = c.recettes_id
+  JOIN 
+      ingredients i ON c.ingredients_id = i.id
+  WHERE 
+      i.name IN ('?', '?', '?');`
     );
 
     return rows;

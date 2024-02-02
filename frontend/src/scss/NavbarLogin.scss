@@ -37,7 +37,7 @@ body {
 
 .navbar-secondary {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 0 20px;
   width: 100%;
   background-color: $secondary-color;
@@ -46,9 +46,8 @@ body {
   background-color: $secondary-color;
   .button {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    width: 10rem;
     background-color: $secondary-color;
     border: none;
     border-radius: 2rem;
@@ -136,7 +135,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
-  margin: 0 0 0 1rem;
+  margin: 0 3rem 0 1rem;
   -ms-text-underline: none;
   cursor: pointer;
     &:hover {

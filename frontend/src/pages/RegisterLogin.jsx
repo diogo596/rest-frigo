@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { success, error } from "../services/toast/toast";
 import "../scss/RegisterLogin.scss";
 import refrigerateur from "../assets/refrigerateur.png";
 
@@ -13,6 +14,9 @@ function RegisterLogin() {
     password: "",
   });
 
+  const handleChangeLogin = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+  };
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     setErrorMessage("");
@@ -22,7 +26,9 @@ function RegisterLogin() {
         withCredentials: true,
       })
       .then((res) => {
-        console.info(res);
+        if (res.statusCode === 200) {
+          success("Vous êtes connecté.");
+        }
         navigate("/fridge");
       })
       .catch((err) => {
@@ -32,19 +38,24 @@ function RegisterLogin() {
       });
   };
 
-  const handleChangeLogin = (e) => {
-    setLogin({ ...login, [e.target.name]: e.target.value });
-  };
   // Partie register
   const [register, setRegister] = useState({
     pseudo: "",
     email: "",
     password: "",
     confirmPassword: "",
+    avatar: "",
   });
 
   const handleChangeRegister = (e) => {
     e.preventDefault();
+    if (e.target.name === "avatar") {
+      setRegister({
+        ...register,
+        [e.target.name]: e.target.files[0],
+      });
+      return;
+    }
     setRegister({
       ...register,
       [e.target.name]: e.target.value,
@@ -58,13 +69,21 @@ function RegisterLogin() {
       setErrorMessage("Les mots de passe ne correspondent pas.");
       return;
     }
+    const formData = new FormData();
+    formData.append("pseudo", register.pseudo);
+    formData.append("email", register.email);
+    formData.append("password", register.password);
+    formData.append("avatar", register.avatar);
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/user`, register)
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/user`, formData)
       .then((res) => {
-        console.info(res);
+        if (res.status === 200) {
+          success("Votre compte a bien été créé.");
+        }
         navigate("/fridge");
       })
       .catch((err) => {
+        error("Une erreur est survenue.");
         console.error(err);
       });
   };
@@ -142,6 +161,18 @@ function RegisterLogin() {
                   onChange={handleChangeRegister}
                 />
               </div>
+              <div className="label-container">
+                <label htmlFor="avatar" className="avatar">
+                  Avatar
+                </label>
+                <input
+                  type="file"
+                  id="avatar"
+                  name="avatar"
+                  required
+                  onChange={handleChangeRegister}
+                />
+              </div>
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>
               )}{" "}
@@ -166,7 +197,6 @@ function RegisterLogin() {
                   id="email"
                   name="email"
                   onChange={handleChangeLogin}
-                  value={login.email}
                   required
                 />
               </div>
@@ -179,14 +209,13 @@ function RegisterLogin() {
                   id="password"
                   name="password"
                   onChange={handleChangeLogin}
-                  value={login.password}
                   required
                 />
               </div>
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>
               )}
-              <button type="button" className="button-login">
+              <button type="submit" className="button-login">
                 Login
               </button>
             </form>

@@ -8,7 +8,7 @@ class RecettesManager extends AbstractManager {
   async create(recette, avatar) {
     const [result] = await this.database.query(
       `insert into ${this.table} (type, name, genre, photo) values (?, ?, ?, ?)`,
-      [recette.pseudo, recette.name, recette.genre, avatar]
+      [recette.type, recette.name, recette.genre, avatar]
     );
     return result.insertId;
   }
@@ -31,12 +31,17 @@ class RecettesManager extends AbstractManager {
 
   async readAllByRecetteId() {
     const [rows] = await this.database.query(
-      `SELECT r.id AS recette_id, r.type, r.name AS recette_name, r.genre, r.photo,
-      i.id AS ingredient_id, i.name AS ingredient_name, i.type AS ingredient_type
-FROM recettes r
-LEFT JOIN compositions c ON r.id = c.recettes_id
-LEFT JOIN ingredients i ON c.ingredient_id = i.id
-WHERE r.name = ?;`
+      `SELECT 
+      r.id AS recette_id, r.type, r.name AS recette_name, r.genre, r.photo,
+      i.name AS ingredient_name
+  FROM 
+      recettes r
+  LEFT JOIN 
+      compositions c ON r.id = c.recettes_id
+  LEFT JOIN 
+      ingredients i ON c.ingredients_id = i.id
+  WHERE 
+      r.name = '?';`
     );
     return rows;
   }

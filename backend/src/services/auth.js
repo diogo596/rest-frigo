@@ -30,7 +30,7 @@ const hashPassword = async (req, res, next) => {
 
 const verifyPwd = async (req, res, next) => {
   try {
-    const userhashed = await tables.users.readByEmailWithPassword(
+    const userhashed = await tables.user.readByEmailWithPassword(
       req.body.email
     );
     if (!userhashed) {

@@ -6,7 +6,7 @@ $secondary-color: #e8e7e7ce;
 $text-color: #000000;
 $outline: #100101f1;
 
-.recettes {
+.recette {
     height: 90vh;
     width: 95vw;
     display: flex;
@@ -39,9 +39,6 @@ $outline: #100101f1;
              }
         }
         .ingredients-recettes {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
             margin: 0.5rem;
             height: 100%;
             width: 35%;
@@ -70,9 +67,6 @@ $outline: #100101f1;
            
     }
     .ingredients-dessert {
-        display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
         margin: 0.5rem;
         height: 45%;
         width: 100%;
