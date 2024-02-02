@@ -1,48 +1,37 @@
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const UserManager = require("../models/UserManager");
 
-// Import access to database tables
+const userManager = new UserManager();
+
 const tables = require("../tables");
 
-// The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
-    // Fetch all items from the database
-    const items = await tables.user.readAll();
+    const user = await tables.user.readAll();
 
-    // Respond with the items in JSON format
-    res.json(items);
+    res.json(user);
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-// The R of BREAD - Read operation
 const read = async (req, res, next) => {
   try {
-    // Fetch a specific item from the database based on the provided ID
-    const item = await tables.user.read(req.params.id);
-
-    // If the item is not found, respond with HTTP 404 (Not Found)
-    // Otherwise, respond with the item in JSON format
-    if (item == null) {
+    const user = await tables.user.read(req.params.id);
+    if (user == null) {
       res.sendStatus(404);
     } else {
-      res.json(item);
+      res.json(user);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
 
-// The E of BREAD - Edit (Update) operation
-// This operation is not yet implemented
-
-// The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  // Extract the item data from the request body
-  const item = req.body;
+  const user = req.body;
   let newName = `public/uploads/dafault.jpg`;
 
   if (req.file !== undefined) {
@@ -52,31 +41,60 @@ const add = async (req, res, next) => {
     fs.renameSync(`${avatar.destination}/${avatar.filename}`, newName);
   }
 
-  // console.log({ item, newName });
-  /**
-   * Je vérifie si l'email est déjà utilisé
-   */
-
   try {
-    // Insert the item into the database
-    const insertId = await tables.user.create(item, newName);
+    if (user.password) {
+      const hashedPassword = await argon2.hash(user.password);
+      delete user.password;
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted item
-    res.status(201).json({ insertId });
+      const insertId = await tables.user.create(
+        {
+          pseudo: user.pseudo,
+          email: user.email,
+          hashedPassword,
+        },
+        newName
+      );
+
+      res.status(201).json({ insertId });
+    } else {
+      throw new Error("Password is missing");
+    }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+const login = async (req, res, next) => {
+  try {
+    const token = jwt.sign(req.user, process.env.APP_SECRET);
+    if (await tables.user.readByEmailWithPassword(req.body.email)) {
+      res.json({ succes: "user loged succes", token });
+    } else {
+      res.json({ error: "oups une email ou password incorrect" });
+    }
+  } catch (err) {
     next(err);
   }
 };
 
-// The D of BREAD - Destroy (Delete) operation
-// This operation is not yet implemented
+async function deleteUser(req, res) {
+  const userId = req.params.id;
 
-// Ready to export the controller functions
+  try {
+    await userManager.delete(userId);
+
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la suppression de l'utilisateur",
+    });
+  }
+}
 module.exports = {
   browse,
   read,
   // edit,
   add,
-  // destroy,
+  login,
+  deleteUser,
 };

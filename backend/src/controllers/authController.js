@@ -1,12 +1,11 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 
-// Import access to database tables
 const tables = require("../tables");
 
 const login = async (req, res, next) => {
   try {
-    const user = await tables.users.readByEmailWithPassword(req.body.email);
+    const user = await tables.user.readByEmailWithPassword(req.body.email);
 
     if (!user || !user.password) {
       res.status(422).json({ error: "Email ou mot de passe incorrect" });
@@ -18,11 +17,9 @@ const login = async (req, res, next) => {
     if (verified) {
       delete user.password;
 
-      const token = jwt.sign(
-        { sub: user.id, isAdmin: user.isAdmin },
-        process.env.APP_SECRET,
-        { expiresIn: "1h" }
-      );
+      const token = jwt.sign({ sub: user.id }, process.env.APP_SECRET, {
+        expiresIn: "1h",
+      });
 
       res.cookie("session_cookie", token, {
         httpOnly: true,
